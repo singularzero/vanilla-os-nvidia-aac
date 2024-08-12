@@ -1,0 +1,24 @@
+--- debian/control.orig
++++ debian/control
+@@ -40,8 +40,8 @@
+             modemmanager-dev,
+             pkg-config,
+             python3-docutils,
+-               systemd [linux-any]
+-Build-Conflicts: libfdk-aac-dev
++               systemd [linux-any],
++               libfdk-aac-dev
+ Standards-Version: 4.6.2
+ Vcs-Browser: https://salsa.debian.org/utopia-team/pipewire
+ Vcs-Git: https://salsa.debian.org/utopia-team/pipewire.git
+--- debian/rules.orig
++++ debian/rules
+@@ -37,7 +37,7 @@
+ 		-Dauto_features=enabled \
+ 		-Davahi=enabled \
+ 		-Dbluez5-backend-native-mm=enabled \
+-		-Dbluez5-codec-aac=disabled \
++		-Dbluez5-codec-aac=enabled \
+ 		-Dbluez5-codec-aptx=enabled \
+ 		-Dbluez5-codec-lc3=enabled \
+ 		-Dbluez5-codec-lc3plus=disabled \
