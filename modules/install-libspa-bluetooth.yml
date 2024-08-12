@@ -20,11 +20,11 @@ modules:
     type: shell
     commands:
       - echo 'deb-src https://ftp.debian.org/debian/ sid main' > /etc/apt/sources.list
-      - apt update
-      - apt build-dep pipewire
+      - apt -y update
+      - apt -y build-dep pipewire
       - mkdir /source/pipewire-source/
       - cd /source/pipewire-source/
-      - apt source pipewire
+      - apt -y source pipewire
       - cd pipewire-*
       - patch -p0 < /source/aac.patch
       - debuild
