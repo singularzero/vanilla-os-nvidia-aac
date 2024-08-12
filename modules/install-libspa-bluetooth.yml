@@ -16,5 +16,17 @@ modules:
       branch: debian
       commit: latest
 
+  - name: build-pipewire
+    type: shell
+    commands:
+      - apt install build-dep pipewire
+      - mkdir /source/pipewire-source/
+      - cd /source/pipewire-source/
+      - apt source pipewire
+      - cd pipewire-*
+      - patch -p0 < /source/aac.patch
+      - debuild
+      - dpkg -i libspa-0.2-bluetooth_*.deb
+      
 commands:
-  - echo 'libfdk build successful'
+  - echo 'pipewire build successful'
