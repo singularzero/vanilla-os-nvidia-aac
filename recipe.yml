@@ -23,19 +23,7 @@ stages:
 
   # Put your custom actions behind this comment
 
-  - name: install-libspa-bluetooth
-    type: dpkg
-    source:
-      url: "https://launchpad.net/~pipewire-debian/+archive/ubuntu/pipewire-upstream/+files/libspa-0.2-bluetooth_1.0.7-3~ubuntu24.10_amd64.deb"
-      type: deb
 
-
-  - name: example-modules # Sample module demonstrating importing local and remote modules
-    type: includes
-    includes:
-      - modules/50-install-debs.yml # Sample local module present in this repository
-      - gh:vanilla-os/dev-image:main:modules/00-basics.yml # Sample GitHub remote module in the format: `gh:your-name/your-repo:branch:modules/file.yml`
-      - https://raw.githubusercontent.com/Vanilla-OS/dev-image/main/modules/05-go.yml # Sample full URL remote module
 
   # Put your custom actions before this comment
 
