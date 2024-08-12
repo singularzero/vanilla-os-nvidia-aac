@@ -19,6 +19,7 @@ modules:
   - name: build-pipewire
     type: shell
     commands:
+      - echo 'deb-src https://ftp.debian.org/debian/ sid main' > /etc/apt/sources.list
       - apt build-dep pipewire
       - mkdir /source/pipewire-source/
       - cd /source/pipewire-source/
