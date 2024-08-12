@@ -25,6 +25,7 @@ stages:
 
   - name: install-libspa-bluetooth
     type: shell
+    commands:
     - wget -O /sources/libspa-0.2-bluetooth.deb https://launchpad.net/~pipewire-debian/+archive/ubuntu/pipewire-upstream/+files/libspa-0.2-bluetooth_1.0.7-3~ubuntu24.10_amd64.deb
     - apt install -y /sources/libspa-0.2-bluetooth.deb
 
