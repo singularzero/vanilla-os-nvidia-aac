@@ -19,7 +19,7 @@ modules:
   - name: build-pipewire
     type: shell
     commands:
-      - apt install build-dep pipewire
+      - apt build-dep pipewire
       - mkdir /source/pipewire-source/
       - cd /source/pipewire-source/
       - apt source pipewire
