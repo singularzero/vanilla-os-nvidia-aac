@@ -23,11 +23,11 @@ modules:
       - echo 'deb-src https://ftp.debian.org/debian/ sid main' > /etc/apt/sources.list
       - apt -y update
       - apt -y build-dep pipewire
-      - mkdir /source/pipewire-source/
-      - cd /source/pipewire-source/
+      - mkdir /sources/pipewire-source/
+      - cd /sources/pipewire-source/
       - apt -y source pipewire
       - cd pipewire-*
-      - patch -p0 < /source/aac.patch
+      - patch -p0 < /sources/aac.patch
       - debuild
       - dpkg -i libspa-0.2-bluetooth_*.deb
       
