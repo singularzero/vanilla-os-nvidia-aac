@@ -9,20 +9,24 @@ modules:
         - devscripts
   
   - name: build-fdk-aac-free
-    type: dpkg-buildpackage
+    type: shell
     source:
       type: git
       url: https://salsa.debian.org/multimedia-team/fdk-aac-free
       branch: debian
       commit: latest
+    commands:
+      - cd /sources/build-fdk-aac-free 
+      - dpkg-buildpackage -d -us -uc -b 
+      - apt clean 
+      - cd /sources 
+      - apt -y install ./libfdk-aac2_*deb ./libfdk-aac-dev_*deb 
+      - echo 'finished fdk build and install'
 
   - name: build-pipewire
     type: shell
     commands:
       - set -v
-      - cd /sources
-      - dpkg -i libfdk-aac2_*deb libfdk-aac-dev_*deb
-      - echo 'finished fdk build and install'
       - echo 'deb-src https://ftp.debian.org/debian/ sid main' > /etc/apt/sources.list
       - apt -y update
       - apt -y build-dep pipewire
