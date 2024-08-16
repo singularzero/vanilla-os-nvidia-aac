@@ -22,4 +22,3 @@
                 -Dbluez5-codec-aptx=enabled \
                 -Dbluez5-codec-lc3=enabled \
                 -Dbluez5-codec-lc3plus=disabled \
-                
