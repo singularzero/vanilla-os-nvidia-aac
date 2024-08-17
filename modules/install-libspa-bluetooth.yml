@@ -12,11 +12,12 @@ modules:
   - name: build-fdk-aac-free
     type: shell
     commands:
+      - sed -i 's/#builder = debuild -i -I/builder = debuild -us -uc -i -I/' /etc/git-buildpackage/gbp.conf
       - mkdir /sources/build-fdk-aac-free
       - cd /sources/build-fdk-aac-free
       - git clone https://salsa.debian.org/multimedia-team/fdk-aac-free
       - cd fdk-aac-free
-      - DEBUILD_DPKG_BUILDPACKAGE_OPTS="-us -uc" gbp buildpackage 
+      - gbp buildpackage 
       - apt -y install ../libfdk-aac2_*deb ../libfdk-aac-dev_*deb 
       - echo 'finished fdk build and install'
 
