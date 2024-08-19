@@ -29,7 +29,7 @@ modules:
       - cd /sources/
       - mk-build-deps -i -t "apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends -y" /sources/pipewire-source/pipewire-*/debian/control
       - cd /sources/pipewire-source/pipewire-*/pipewire-v*
-      - DEB_BUILD_OPTIONS=noautodbgsym debuild -us -uc -e DEB_BUILD_OPTIONS
+      - debuild -us -uc
       - dpkg -i libspa-0.2-bluetooth_*.deb
       
 commands:
