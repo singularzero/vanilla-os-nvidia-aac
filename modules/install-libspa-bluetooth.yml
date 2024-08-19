@@ -19,6 +19,7 @@ modules:
     type: shell
     commands:
       - set -v
+      - curl -o /sources/aac.patch https://raw.githubusercontent.com/singularzero/vanilla-os-nvidia-aac/mk-build-deps/aac.patch
       - echo 'deb-src https://ftp.debian.org/debian/ sid main' > /etc/apt/sources.list
       - apt -y update
       - mkdir /sources/pipewire-source/
@@ -30,7 +31,15 @@ modules:
       - mk-build-deps -i -t "apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends -y" /sources/pipewire-source/pipewire-*/debian/control
       - cd /sources/pipewire-source/pipewire-*/pipewire-v*
       - debuild -us -uc
-      - dpkg -i libspa-0.2-bluetooth_*.deb
+      - dpkg -i ../../libspa-0.2-bluetooth_*.deb
+
+  - name: cleanup
+    type: shell
+    commands:
+      - apt -y remove --purge devscripts
+      - apt -y remove --purge pipewire-build-deps
+      - apt -y autoremove
+    # remaining files should be cleaned by vib script
       
 commands:
-  - echo 'pipewire build successful'
+  - echo 'install-libspa-bluetooth successful'
