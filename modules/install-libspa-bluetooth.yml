@@ -5,21 +5,15 @@ modules:
     type: apt
     source:
       packages:
-        - build-essential
         - devscripts
-        - git-buildpackage
-  
+        
   - name: build-fdk-aac-free
-    type: shell
-    commands:
-      - sed -i 's/#builder = debuild -i -I/builder = debuild -us -uc -i -I/' /etc/git-buildpackage/gbp.conf
-      - mkdir /sources/build-fdk-aac-free
-      - cd /sources/build-fdk-aac-free
-      - git clone https://salsa.debian.org/multimedia-team/fdk-aac-free
-      - cd fdk-aac-free
-      - gbp buildpackage 
-      - apt -y install ../libfdk-aac2_*deb ../libfdk-aac-dev_*deb 
-      - echo 'finished fdk build and install'
+    type: dpkg-buildpackage
+    source:
+      type: git
+      url: https://salsa.debian.org/multimedia-team/fdk-aac-free
+      branch: debian
+      commit: latest
 
   - name: build-pipewire
     type: shell
@@ -27,14 +21,15 @@ modules:
       - set -v
       - echo 'deb-src https://ftp.debian.org/debian/ sid main' > /etc/apt/sources.list
       - apt -y update
-      - apt -y build-dep pipewire
       - mkdir /sources/pipewire-source/
       - cd /sources/pipewire-source/
-      - apt -y source pipewire
+      - apt source pipewire
       - cd pipewire-*
       - patch -p0 < /sources/aac.patch
-      - cd pipewire-v*      
-      - DEB_BUILD_OPTIONS=noautodbgsym debuild -us -uc
+      - cd /sources/
+      - mk-build-deps -i /sources/pipewire-source/pipewire-*/debian/control
+      - cd /sources/pipewire-source/pipewire-*/pipewire-v*
+      - DEB_BUILD_OPTIONS=noautodbgsym debuild -us -uc -e DEB_BUILD_OPTIONS
       - dpkg -i libspa-0.2-bluetooth_*.deb
       
 commands:
