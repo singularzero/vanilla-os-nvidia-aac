@@ -2,7 +2,7 @@ name: Vib Build
 
 on:
   push:
-    branches: [ "main", "non-free" ]
+    branches: [ "main", "non-free", "mk-build-deps" ]
     tags:
       - '*'
   schedule:
