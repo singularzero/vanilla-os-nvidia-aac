@@ -7,24 +7,20 @@ modules:
       packages:
         - devscripts
         
-  - name: build-fdk-aac-free
-    type: dpkg-buildpackage
-    source:
-      type: git
-      url: https://salsa.debian.org/multimedia-team/fdk-aac-free
-      branch: debian
-      commit: latest
-
   - name: build-pipewire
     type: shell
     commands:
       - set -v
+      - PIPEWIRE_VERSION=$(dpkg-query --showformat='${Version}' --show pipewire)
+      - UPSTREAM_VERSION=$(echo $PIPEWIRE_VERSION | grep -P -i -o '[0-9]+\.[0-9]+\.[0-9]')
+      - TIMESTAMP=$(curl https://snapshot.debian.org/mr/package/pipewire/$PIPEWIRE_VERSION/srcfiles?fileinfo=1 | jq -r '.fileinfo[].[0].first_seen' | head -n 1)
       - curl -o /sources/aac.patch https://raw.githubusercontent.com/singularzero/vanilla-os-nvidia-aac/mk-build-deps/aac.patch
-      - echo 'deb-src https://ftp.debian.org/debian/ sid main' >> /etc/apt/sources.list
-      - apt -y update
       - mkdir /sources/pipewire-source/
       - cd /sources/pipewire-source/
-      - apt source pipewire
+      - curl -LO https://snapshot.debian.org/archive/debian/$TIMESTAMP/pool/main/p/pipewire/pipewire_${PIPEWIRE_VERSION}.debian.tar.xz
+      - curl -LO https://snapshot.debian.org/archive/debian/$TIMESTAMP/pool/main/p/pipewire/pipewire_${PIPEWIRE_VERSION}.dsc
+      - curl -LO https://snapshot.debian.org/archive/debian/$TIMESTAMP/pool/main/p/pipewire/pipewire_${UPSTREAM_VERSION}.orig.tar.bz2
+      - dpkg-source -x *.dsc
       - cd pipewire-*
       - patch -p0 < /sources/aac.patch
       - cd /sources/
