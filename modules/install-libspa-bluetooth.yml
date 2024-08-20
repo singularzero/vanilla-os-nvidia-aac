@@ -15,19 +15,13 @@ modules:
       branch: debian
       commit: latest
 
-  - name: check-set-version
-    type: shell
-    commands:
-      - PIPEWIRE_VERSION=$(dpkg-query --showformat='${Version}' --show pipewire)
-      - TIMESTAMP=$(curl https://snapshot.debian.org/mr/package/pipewire/$PIPEWIRE_VERSION/srcfiles?fileinfo=1 | jq -r '.fileinfo[].[0].first_seen' | head -n 1)
-      - echo deb-src https://snapshot.debian.org/archive/debian/$TIMESTAMP/ sid main >> /etc/apt/sources.list
-      - apt -y update
-
   - name: build-pipewire
     type: shell
     commands:
       - set -v
       - curl -o /sources/aac.patch https://raw.githubusercontent.com/singularzero/vanilla-os-nvidia-aac/mk-build-deps/aac.patch
+      - echo 'deb-src https://ftp.debian.org/debian/ sid main' >> /etc/apt/sources.list
+      - apt -y update
       - mkdir /sources/pipewire-source/
       - cd /sources/pipewire-source/
       - apt source pipewire
