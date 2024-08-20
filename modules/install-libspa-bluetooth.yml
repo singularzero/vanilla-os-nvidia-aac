@@ -19,10 +19,8 @@ modules:
     type: shell
     commands:
       - PIPEWIRE_VERSION=$(dpkg-query --showformat='${Version}' --show pipewire)
-      - TIMESTAMP=$(curl https://snapshot.debian.org/mr/package/pipewire/$PIPEWIRE_VERSION/srcfiles?fileinfo=1 |
-      - jq -r '.fileinfo[].[0].first_seen' |
-      - head -n 1)
-      - echo deb-src https://snapshot.debian.org/archive/debian/$TIMESTAMP/ sid main >> /etc/apt/sources.list    
+      - TIMESTAMP=$(curl https://snapshot.debian.org/mr/package/pipewire/$PIPEWIRE_VERSION/srcfiles?fileinfo=1 | jq -r '.fileinfo[].[0].first_seen' | head -n 1)
+      - echo deb-src https://snapshot.debian.org/archive/debian/$TIMESTAMP/ sid main >> /etc/apt/sources.list
       - apt -y update
 
   - name: build-pipewire
