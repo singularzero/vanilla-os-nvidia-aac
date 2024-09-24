@@ -14,7 +14,7 @@ modules:
       - PIPEWIRE_VERSION=$(dpkg-query --showformat='${Version}' --show pipewire)
       - UPSTREAM_VERSION=$(echo $PIPEWIRE_VERSION | grep -P -i -o '[0-9]+\.[0-9]+\.[0-9]')
       - TIMESTAMP=$(curl https://snapshot.debian.org/mr/package/pipewire/$PIPEWIRE_VERSION/srcfiles?fileinfo=1 | jq -r '.fileinfo[].[0].first_seen' | head -n 1)
-      - curl -o /sources/aac.patch https://raw.githubusercontent.com/singularzero/vanilla-os-nvidia-aac/mk-build-deps/aac.patch
+      - curl -o /sources/aac.patch https://raw.githubusercontent.com/singularzero/vanilla-os-nvidia-aac/main/aac.patch
       - mkdir /sources/pipewire-source/
       - cd /sources/pipewire-source/
       - curl -LO https://snapshot.debian.org/archive/debian/$TIMESTAMP/pool/main/p/pipewire/pipewire_${PIPEWIRE_VERSION}.debian.tar.xz
